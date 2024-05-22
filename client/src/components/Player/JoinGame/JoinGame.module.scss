@@ -1,0 +1,58 @@
+@import '../../../styles/colors';
+@import '../../../styles/fonts';
+
+.home {
+  height: 100vh;
+  /* Add your image path inside the url() function */
+  background-image: url('../../../../asset/image/bg.png');
+  /* Specify background properties */
+  background-size: cover; /* Adjusts the size of the background image to cover the entire container */
+  background-position: center; /* Centers the background image within the container */
+  /* Optional: Add other background properties like repeat, attachment, etc. */
+}
+
+
+.mainTitle {
+  color: $color-white;
+  font-family: $main-logo;
+  font-size: 8rem;
+  text-align: center;
+  padding-bottom: 10rem;
+  margin: 0 auto;
+  min-width: 10rem;
+}
+
+@keyframes home-background {
+  25% {background: $background-transition-color-blue;}
+  50% {  background: $background-transition-color-green;}
+  75% {background: $background-transition-color-yellow;}
+  100% {background: $background-transition-color-orange;}
+}
+
+.verticalMainForm {
+  max-width: 25.5rem;
+}
+
+.error {
+  display: table-cell;
+  background-color: $color-red;
+  color: $color-white;
+  border-radius: 0.4rem;
+  vertical-align: middle;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  min-height: 6rem;
+  margin-top: 2rem;
+}
+
+.enterBtn > span {
+  margin: 0 auto;
+}
+
+.createQuiz, .hostQuiz {
+  color: $color-white;
+  font-size: 2rem;
+  margin: 1rem 0;
+}
