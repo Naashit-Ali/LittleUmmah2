@@ -14,6 +14,8 @@ import { HashRouter, Switch, Route,  } from 'react-router-dom';
 import Login from './Auth/Components/Login/Login';
 import Register from './Auth/Components/Register/Register';
 import Review from './Host/Review/Review';
+import Privacy from './Privacy/Privacy';
+import Delete from './Delete/Delete';
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
           <Route path='/login' component={ Login }/> 
           <Route path='/register' component={ Register }/>
           <Route path='/review' component={ Review }/>
+          <Route path="/privacy" component={Privacy} />
+          <Route path="/delete" component={Delete} />
         </Switch>
       </HashRouter>
     </div>

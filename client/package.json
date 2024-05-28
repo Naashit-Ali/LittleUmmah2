@@ -1,5 +1,5 @@
 {
-  "homepage": "littleummah",
+  "homepage": "",
   "options": {
     "allowedHosts": ["localhost", ".localhost"],
     "proxy": "https://localhost:2025/"

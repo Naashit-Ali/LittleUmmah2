@@ -8,9 +8,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { socket } from '../../Global/Header';
 import LoginModal from '../../Auth/Components/Login/Login'; 
-
-
-
+import Privacy from '../../Privacy/Privacy';
 
 
 
@@ -74,6 +72,7 @@ const JoinGameInput = withStyles(theme => ({
 }))(InputBase);
 
 export default class JoinGame extends Component {
+  
   constructor() {
     super();
     this.state = {
@@ -82,7 +81,9 @@ export default class JoinGame extends Component {
       message: null,
       disabled: false,
       role: null, // 'student' or 'teacher'
-      isTeacherLoggedIn: false // Track whether teacher is logged in
+      isTeacherLoggedIn: false, // Track whether teacher is logged in
+      isDropdownOpen: false, // State for dropdown menu
+
     };
   }
 
@@ -158,8 +159,25 @@ export default class JoinGame extends Component {
     this.setState({ isTeacherLoggedIn: true });
   };
 
+  navigateToPrivacy = () => {
+    this.props.history.push('/privacy');
+  };
+
+  navigateTo = (path) => {
+    this.props.history.push(path);
+    this.setState({ isDropdownOpen: false });
+  };
+
+  toggleDropdown = () => {
+    this.setState((prevState) => ({ isDropdownOpen: !prevState.isDropdownOpen }));
+  };
+
+  
+  
+
   render() {
-    const { role, isTeacherLoggedIn } = this.state;
+    
+    const { role, isTeacherLoggedIn, isDropdownOpen } = this.state;
     let error;
 
     if (this.state.message === null) {
@@ -253,6 +271,17 @@ export default class JoinGame extends Component {
         >
           <div>
             <h1 className={styles.mainTitle}>LITTLE UMMAH</h1>
+            <div className={styles.menu}>
+              <button className={styles.menuButton} onClick={this.toggleDropdown}>
+                &#x22EE;
+              </button>
+              {isDropdownOpen && (
+                <div className={styles.dropdown}>
+                  <button onClick={() => this.navigateTo('/privacy')}>Privacy and Policy</button>
+                  <button onClick={() => this.navigateTo('/delete')}>Delete Account</button>
+                </div>
+              )}
+            </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 20 }}>
               <button onClick={() => this.handleRoleSelect('student')} style={buttonStyle}>Student</button>
               <button onClick={() => this.handleRoleSelect('teacher')} style={buttonStyle}>Teacher</button>
