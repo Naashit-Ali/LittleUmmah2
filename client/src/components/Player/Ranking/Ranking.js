@@ -1,8 +1,19 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
+import { useHistory } from 'react-router-dom';
+
 import styles from './Ranking.module.scss';
 
 export default function Ranking(props) {
+
+  const history = useHistory();
+
+  const handleHomeButtonClick = () => {
+    // End the session and navigate to the home screen
+    // Add your session end logic here
+    history.push('/');
+  };
+
   return (
     <Grid
       container
@@ -32,6 +43,7 @@ export default function Ranking(props) {
         style={{ minHeight: "90vh" }}
         className={ styles.main }
       >
+        <button className={styles.homeButton} onClick={handleHomeButtonClick}>Home</button>
         <Rank rank={ props.rank }/>
         <div className={ styles.score }>{ props.score }</div>
       </Grid>

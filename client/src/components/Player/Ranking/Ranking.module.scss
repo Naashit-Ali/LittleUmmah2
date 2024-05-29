@@ -11,6 +11,24 @@
   border-bottom: 0.3rem solid rgba(0, 0, 0, 0.15);
 }
 
+.homeButton {
+  position: absolute;
+  top: 8rem;
+  right: 1rem;
+  background-color: black;
+  color: $color-white;
+  border: none;
+  padding: 1rem 1rem;
+  font-size: 2rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken(red, 10%);
+  }
+}
+
 .main {
   font-family: $secondary-font;
   font-size: 6.4rem;
