@@ -7,10 +7,8 @@ import grey from '@material-ui/core/colors/grey';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { socket } from '../../Global/Header';
-import LoginModal from '../../Auth/Components/Login/Login'; 
+import LoginModal from '../../Auth/Components/Login/Login';
 import Privacy from '../../Privacy/Privacy';
-
-
 
 const darkGreyTheme = createMuiTheme({
   palette: {
@@ -72,18 +70,16 @@ const JoinGameInput = withStyles(theme => ({
 }))(InputBase);
 
 export default class JoinGame extends Component {
-  
   constructor() {
     super();
     this.state = {
-      nickname: null,
-      pin: null,
+      nickname: '',
+      pin: '',
       message: null,
       disabled: false,
       role: null, // 'student' or 'teacher'
       isTeacherLoggedIn: false, // Track whether teacher is logged in
       isDropdownOpen: false, // State for dropdown menu
-
     };
   }
 
@@ -108,6 +104,22 @@ export default class JoinGame extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { nickname, pin } = this.state;
+
+    // Validate nickname and pin
+    if (nickname.length < 4 || nickname.length > 12) {
+      const message = 'Nickname must be between 4 and 12 characters.';
+      this.setState({ message });
+      alert(message);
+      return;
+    }
+
+    if (!/^\d{8}$/.test(pin)) {
+      const message = 'PIN must be exactly 8 digits.';
+      this.setState({ message });
+      alert(message);
+      return;
+    }
+
     // Handle form submission based on role
     if (this.state.role === 'student') {
       this.handleSubmitStudent();
@@ -126,9 +138,9 @@ export default class JoinGame extends Component {
 
   componentDidMount() {
     socket.on("NICKNAME_TAKEN", () => {
-      this.setState({
-        message: "Nickname taken"
-      });
+      const message = "Nickname taken";
+      this.setState({ message });
+      alert(message);
 
       setTimeout(() => this.setState({
         message: null
@@ -136,19 +148,18 @@ export default class JoinGame extends Component {
     });
 
     socket.on("GAME_NOT_FOUND", () => {
-      this.setState({
-        message: "Not found"
-      });
+      const message = "Not found";
+      this.setState({ message });
+      alert(message);
 
       setTimeout(() => this.setState({
         message: null
       }), 3000);
-
     });
 
     socket.on("PLAYER_JOINED_SUCCESSFULLY", data => {
-      this.props.history.push(`/instructions?nickname=${this.state.nickname}&pin=${this.state.pin}`)
-    })
+      this.props.history.push(`/instructions?nickname=${this.state.nickname}&pin=${this.state.pin}`);
+    });
   }
 
   handleRoleSelect = (role) => {
@@ -172,11 +183,7 @@ export default class JoinGame extends Component {
     this.setState((prevState) => ({ isDropdownOpen: !prevState.isDropdownOpen }));
   };
 
-  
-  
-
   render() {
-    
     const { role, isTeacherLoggedIn, isDropdownOpen } = this.state;
     let error;
 
@@ -186,12 +193,13 @@ export default class JoinGame extends Component {
       error = <div className={styles.error}><div>We didn't recognise the game pin.</div>Please check and try again.</div>;
     } else if (this.state.message === "Nickname taken") {
       error = <div className={styles.error}>Sorry, that nickname is taken.</div>;
+    } else {
+      error = <div className={styles.error}>{this.state.message}</div>;
     }
 
     let buttons;
     let additionalContent;
     if (role === 'student') {
-      // Render student join form
       buttons = (
         <>
           <form onSubmit={this.handleSubmit}>
@@ -266,7 +274,6 @@ export default class JoinGame extends Component {
           container
           direction="column"
           alignItems="center"
-          //   justify="center"
           style={{ minHeight: '100vh' }}
         >
           <div>
@@ -295,6 +302,6 @@ export default class JoinGame extends Component {
           </div>
         </Grid>
       </div>
-    )
+    );
   }
 }
